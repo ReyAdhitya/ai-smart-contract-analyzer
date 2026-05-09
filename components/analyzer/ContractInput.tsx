@@ -4,7 +4,6 @@ interface ContractInputProps {
   value: string;
   onChange: (value: string) => void;
   onAnalyze: () => void;
-  isLoading: boolean;
 }
 
 const PLACEHOLDER = `// Paste your Solidity contract here
@@ -22,14 +21,14 @@ contract Example {
     }
 }`;
 
-export function ContractInput({ value, onChange, onAnalyze, isLoading }: ContractInputProps) {
+export function ContractInput({ value, onChange, onAnalyze }: ContractInputProps) {
   const isEmpty = value.trim().length === 0;
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     // Submit on Cmd+Enter / Ctrl+Enter
     if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
-      if (!isEmpty && !isLoading) onAnalyze();
+      if (!isEmpty) onAnalyze();
     }
   }
 
@@ -67,41 +66,13 @@ export function ContractInput({ value, onChange, onAnalyze, isLoading }: Contrac
 
         <button
           onClick={onAnalyze}
-          disabled={isEmpty || isLoading}
+          disabled={isEmpty}
           className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-3.5 py-1.5 font-mono text-[11px] font-medium uppercase tracking-wider text-black transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:bg-zinc-800 disabled:text-zinc-500"
         >
-          {isLoading ? (
-            <>
-              <Spinner />
-              Analyzing
-            </>
-          ) : (
-            <>
-              Run Analysis
-              <span aria-hidden>→</span>
-            </>
-          )}
+          Run Analysis
+          <span aria-hidden>→</span>
         </button>
       </div>
     </div>
-  );
-}
-
-function Spinner() {
-  return (
-    <svg
-      className="h-3.5 w-3.5 animate-spin"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      aria-hidden
-    >
-      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-      />
-    </svg>
   );
 }

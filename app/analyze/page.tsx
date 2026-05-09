@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAnalyzer } from "@/hooks/useAnalyzer";
 import { ContractInput } from "@/components/analyzer/ContractInput";
 import { AnalysisResult } from "@/components/analyzer/AnalysisResult";
+import { ScanningView } from "@/components/analyzer/ScanningView";
 import { Navbar } from "@/components/layout/Navbar";
 
 export default function AnalyzePage() {
@@ -49,12 +50,13 @@ export default function AnalyzePage() {
 
         {result ? (
           <AnalysisResult result={result} onReset={handleReset} />
+        ) : isLoading ? (
+          <ScanningView code={code} />
         ) : (
           <ContractInput
             value={code}
             onChange={setCode}
             onAnalyze={handleAnalyze}
-            isLoading={isLoading}
           />
         )}
       </main>

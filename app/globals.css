@@ -34,3 +34,52 @@ body {
   -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 35%, #000 35%, transparent 80%);
           mask-image: radial-gradient(ellipse 65% 55% at 50% 35%, #000 35%, transparent 80%);
 }
+
+/* Scanning line that sweeps top-to-bottom over the analyzed code while
+   the request is in flight. Uses a soft gradient with a sharp center
+   line so it reads like a CRT scanner. */
+@keyframes scan {
+  0%   { top: -8%;  opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 72px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(16, 185, 129, 0.04) 25%,
+    rgba(52, 211, 153, 0.55) 49%,
+    rgba(167, 243, 208, 0.95) 50%,
+    rgba(52, 211, 153, 0.55) 51%,
+    rgba(16, 185, 129, 0.04) 75%,
+    transparent 100%
+  );
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.35);
+  animation: scan 2.6s ease-in-out infinite;
+}
+
+/* Slight fade-in for the cycling status message so each new line
+   doesn't pop in jarringly. Triggered via React's `key` prop. */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 220ms ease-out both;
+}
+
+/* Terminal-style blinking caret. */
+@keyframes blink {
+  0%, 49.99%   { opacity: 1; }
+  50%, 100%    { opacity: 0; }
+}
+.animate-blink {
+  animation: blink 1s steps(1, end) infinite;
+}
