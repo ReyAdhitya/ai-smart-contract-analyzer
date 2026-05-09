@@ -2,7 +2,7 @@
 
 A web application that audits Solidity smart contracts for security vulnerabilities using Anthropic's Claude AI. Paste a contract, get back a structured report covering reentrancy attacks, access control flaws, integer overflows, and other common exploit vectors — along with a 0–100 risk score and concrete remediation advice for each finding.
 
-**Live demo:** [ai-smart-contract-analyzer-r8ckkv10q-reys-projects-3a73006b.vercel.app](https://ai-smart-contract-analyzer-r8ckkv10q-reys-projects-3a73006b.vercel.app)
+**Live demo:** [ai-smart-contract-analyzer.vercel.app](https://ai-smart-contract-analyzer.vercel.app)
 
 ---
 
