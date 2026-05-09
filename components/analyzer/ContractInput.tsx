@@ -35,43 +35,54 @@ export function ContractInput({ value, onChange, onAnalyze, isLoading }: Contrac
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex items-center justify-between">
-        <label className="text-sm font-medium text-zinc-300">
-          Solidity Contract
-        </label>
-        <span className="text-xs text-zinc-500">
-          {value.length.toLocaleString()} / 50,000 chars
-        </span>
+      <div className="overflow-hidden rounded-md border border-white/[0.08] bg-black/40 transition-colors focus-within:border-emerald-500/40">
+        {/* Editor chrome — filename + char counter */}
+        <div className="flex items-center justify-between border-b border-white/[0.06] px-3 py-1.5">
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/70" />
+            <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
+              contract.sol
+            </span>
+          </div>
+          <span className="font-mono text-[10px] tabular-nums text-zinc-600">
+            {value.length.toLocaleString()} / 50,000
+          </span>
+        </div>
+
+        <textarea
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder={PLACEHOLDER}
+          spellCheck={false}
+          rows={20}
+          className="w-full resize-none bg-transparent px-3 py-3 font-mono text-[13px] leading-relaxed text-zinc-100 placeholder:text-zinc-600 focus:outline-none"
+        />
       </div>
 
-      <textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder={PLACEHOLDER}
-        spellCheck={false}
-        rows={18}
-        className="w-full resize-none rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 font-mono text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-colors"
-      />
+      <div className="flex items-center justify-between gap-3">
+        <p className="font-mono text-[10px] uppercase tracking-wider text-zinc-600">
+          {isEmpty ? "awaiting_input" : "press ⌘↵ to run"}
+        </p>
 
-      <button
-        onClick={onAnalyze}
-        disabled={isEmpty || isLoading}
-        className="flex items-center justify-center gap-2 rounded-lg bg-violet-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-violet-500 disabled:cursor-not-allowed disabled:opacity-40"
-      >
-        {isLoading ? (
-          <>
-            <Spinner />
-            Analyzing...
-          </>
-        ) : (
-          "Analyze Contract"
-        )}
-      </button>
-
-      <p className="text-center text-xs text-zinc-600">
-        {isEmpty ? "Paste a contract above to get started" : "Press Cmd+Enter to analyze"}
-      </p>
+        <button
+          onClick={onAnalyze}
+          disabled={isEmpty || isLoading}
+          className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-3.5 py-1.5 font-mono text-[11px] font-medium uppercase tracking-wider text-black transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:bg-zinc-800 disabled:text-zinc-500"
+        >
+          {isLoading ? (
+            <>
+              <Spinner />
+              Analyzing
+            </>
+          ) : (
+            <>
+              Run Analysis
+              <span aria-hidden>→</span>
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }
@@ -79,10 +90,11 @@ export function ContractInput({ value, onChange, onAnalyze, isLoading }: Contrac
 function Spinner() {
   return (
     <svg
-      className="h-4 w-4 animate-spin"
+      className="h-3.5 w-3.5 animate-spin"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
+      aria-hidden
     >
       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
       <path

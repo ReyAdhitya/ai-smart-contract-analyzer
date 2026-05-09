@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAnalyzer } from "@/hooks/useAnalyzer";
 import { ContractInput } from "@/components/analyzer/ContractInput";
 import { AnalysisResult } from "@/components/analyzer/AnalysisResult";
+import { Navbar } from "@/components/layout/Navbar";
 
 export default function AnalyzePage() {
   const [code, setCode] = useState("");
@@ -19,33 +20,33 @@ export default function AnalyzePage() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 px-4 py-12">
-      <div className="mx-auto max-w-3xl">
+    <div className="min-h-screen">
+      <Navbar />
 
-        {/* Page header */}
-        <div className="mb-10">
-          <div className="flex items-center gap-2">
-            <span className="flex h-2 w-2 rounded-full bg-violet-500" />
-            <span className="text-xs font-medium uppercase tracking-widest text-violet-400">
-              AI-Powered
-            </span>
-          </div>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-zinc-100">
-            Smart Contract Analyzer
+      <main className="mx-auto max-w-3xl px-4 py-8">
+        {/* Page heading */}
+        <div className="mb-5 border-b border-white/[0.06] pb-4">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-emerald-400">
+            /analyze
+          </span>
+          <h1 className="mt-1 text-xl font-semibold tracking-tight text-zinc-50">
+            Contract Analyzer
           </h1>
-          <p className="mt-2 text-sm text-zinc-500">
-            Paste any Solidity contract to detect security vulnerabilities instantly.
+          <p className="mt-0.5 text-xs text-zinc-500">
+            Paste a Solidity contract to scan for vulnerabilities.
           </p>
         </div>
 
         {/* Error banner */}
         {error && (
-          <div className="mb-6 rounded-lg border border-red-800/50 bg-red-900/20 px-4 py-3 text-sm text-red-400">
-            {error}
+          <div className="mb-4 flex items-start gap-2 rounded-md border border-red-500/20 bg-red-500/[0.04] px-3 py-2">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-red-400">
+              err
+            </span>
+            <span className="text-xs leading-relaxed text-red-300">{error}</span>
           </div>
         )}
 
-        {/* Main content: show input OR result */}
         {result ? (
           <AnalysisResult result={result} onReset={handleReset} />
         ) : (
@@ -56,8 +57,7 @@ export default function AnalyzePage() {
             isLoading={isLoading}
           />
         )}
-
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }

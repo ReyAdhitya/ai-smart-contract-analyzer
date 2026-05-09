@@ -13,14 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Smart Contract Analyzer",
-  description: "AI-powered Solidity smart contract security analysis",
+  title: "Auditor — Solidity Security Analyzer",
+  description: "AI-powered static analysis for Solidity smart contracts.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="bg-zinc-950 text-zinc-100 antialiased">{children}</body>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }
